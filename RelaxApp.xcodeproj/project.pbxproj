@@ -6,8 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C38D02892D77E3D100FE8FFF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C38D02872D77E3D100FE8FFF /* Localizable.strings */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		C37EDBF82D768B6C00ABDA60 /* RelaxApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RelaxApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C38D02882D77E3D100FE8FFF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C38D028A2D77E42200FE8FFF /* es-419 */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-419"; path = "es-419.lproj/Localizable.strings"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +38,7 @@
 		C37EDBEF2D768B6C00ABDA60 = {
 			isa = PBXGroup;
 			children = (
+				C38D02872D77E3D100FE8FFF /* Localizable.strings */,
 				C37EDBFA2D768B6C00ABDA60 /* RelaxApp */,
 				C37EDBF92D768B6C00ABDA60 /* Products */,
 			);
@@ -91,6 +98,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"es-419",
 			);
 			mainGroup = C37EDBEF2D768B6C00ABDA60;
 			minimizedProjectReferenceProxies = 1;
@@ -109,6 +117,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C38D02892D77E3D100FE8FFF /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -123,6 +132,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C38D02872D77E3D100FE8FFF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C38D02882D77E3D100FE8FFF /* en */,
+				C38D028A2D77E42200FE8FFF /* es-419 */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		C37EDC042D768B6D00ABDA60 /* Debug */ = {

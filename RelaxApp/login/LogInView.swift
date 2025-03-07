@@ -1,13 +1,13 @@
 //
-//  ContentView.swift
+//  LogInView.swift
 //  RelaxApp
 //
-//  Created by ITIT on 03/03/25.
+//  Created by ITIT on 06/03/25.
 //
 
 import SwiftUI
 
-struct ContentView: View {
+struct LogInView: View {
     @State var text: String = ""
     @State private var isSecured: Bool = true
     
@@ -70,6 +70,18 @@ struct ContentView: View {
     }
 }
 
+extension Color {
+    init(hex: Int, opacity: Double = 1) {
+        self.init(
+            .sRGB,
+            red: Double((hex >> 16) & 0xff) / 255,
+            green: Double((hex >> 08) & 0xff) / 255,
+            blue: Double((hex >> 00) & 0xff) / 255,
+            opacity: opacity
+        )
+    }
+}
+
 #Preview {
-    ContentView()
+    LogInView()
 }

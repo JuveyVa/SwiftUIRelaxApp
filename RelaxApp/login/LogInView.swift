@@ -1,72 +1,94 @@
-//
-//  LogInView.swift
-//  RelaxApp
-//
-//  Created by ITIT on 06/03/25.
-//
-
 import SwiftUI
 
 struct LogInView: View {
-    @State var text: String = ""
+    @StateObject private var viewModel = LoginViewModel()
     @State private var isSecured: Bool = true
+    @State private var navigateToMainView: Bool = false // Variable para controlar la navegación
     
     var body: some View {
-        VStack {
-            Image("relaxlogo")
-                .resizable()
-                .frame(width: 100, height: 100)
-            Text(LocalizedStringKey("welcome"))
-                .font(.largeTitle)
-                .fontWeight(.bold)
-                .padding(.bottom, 20)
-                .foregroundColor(Color(hex: 0x1ACCB5))
-            TextField("email", text: .constant(""))
-                .padding(.bottom, 25)
-            ZStack(alignment: .trailing) {
-                        Group {
-                            if isSecured {
-                                SecureField("password", text: $text)
-                            } else {
-                                TextField("password", text: $text)
-                            }
-                        }.padding(.trailing, 32)
-
-                        Button(action: {
-                            isSecured.toggle()
-                        }) {
-                            Image(systemName: self.isSecured ? "eye.slash" : "eye")
-                                .accentColor(.gray)
+        NavigationStack {
+            VStack {
+                Image("relaxlogo")
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                Text(LocalizedStringKey("welcome"))
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.bottom, 20)
+                    .foregroundColor(Color(hex: 0x1ACCB5))
+                TextField(LocalizedStringKey("email"), text: $viewModel.email)
+                    .padding(.bottom, 25)
+                ZStack(alignment: .trailing) {
+                    Group {
+                        if isSecured {
+                            SecureField(LocalizedStringKey("password"), text: $viewModel.password)
+                        } else {
+                            TextField(LocalizedStringKey("password"), text: $viewModel.password)
                         }
+                    }.padding(.trailing, 32)
+
+                    Button(action: {
+                        isSecured.toggle()
+                    }) {
+                        Image(systemName: self.isSecured ? "eye.slash" : "eye")
+                            .accentColor(.gray)
                     }
+                }
                 .padding(.bottom, 20)
-            Button(action: {
-                print("Hola")
-            }) {
-                Text("Log In")
-                    .bold()
-                    .foregroundColor(.black)
-                    .padding()
-                    .frame(width: 350, height: 35)
+                
+                Button(action: {
+                    // Realizar login
+                    viewModel.login()
+                }) {
+                    Text("button_login")
+                        .bold()
+                        .foregroundColor(.black)
+                        .padding()
+                        .frame(width: 350, height: 35)
+                }
+                .background(Color(hex: 0x1ACCB5))
+                .clipShape(Capsule())
+                .padding(.top)
+                
+                Button(action: {
+                    print("Si")
+                }) {
+                    Text(LocalizedStringKey("message_create_account"))
+                        .foregroundColor(.black)
+                        .padding()
+                        .frame(width: 350, height: 35)
+                        .font(.system(size: 14))
+                }
+                .background(Color(.white))
+                .clipShape(Capsule())
+                .padding(.top, 5)
+
+                // Aquí definimos el NavigationLink que se activa cuando navigateToMainView es true
+                NavigationLink(
+                    destination: MainView(),
+                    isActive: $navigateToMainView,
+                    label: { EmptyView() }
+                )
             }
-            .background(Color(hex: 0x1ACCB5))
-            .clipShape(Capsule())
-            .padding(.top)
-            
-            Button(action: {
-                print("Si")
-            }) {
-                Text("Don't have an account? Sign Up")
-                    .foregroundColor(.black)
-                    .padding()
-                    .frame(width: 350, height: 35)
-                    .font(.system(size: 14))
+            .padding()
+            // Observamos cambios en isValid para decidir si navegamos a MainView
+            .onChange(of: viewModel.isValid) { newValue in
+                if newValue {
+                    navigateToMainView = true
+                    viewModel.showAlert = false // Ocultar la alerta si el login fue exitoso
+                } else {
+                    viewModel.showAlert = true // Mostrar la alerta si las credenciales son incorrectas
+                }
             }
-            .background(Color(.white))
-            .clipShape(Capsule())
-            .padding(.top, 5)
+            // Mostramos la alerta si es necesario
+            .alert("Credenciales inválidas", isPresented: $viewModel.showAlert) {
+                Button("OK", role: .cancel) {
+                    viewModel.showAlert = false // Reseteamos el estado de la alerta cuando el usuario presiona OK
+                }
+            } message: {
+                Text("Las credenciales ingresadas no son correctas. Intenta de nuevo.")
+            }
         }
-        .padding()
     }
 }
 
@@ -80,8 +102,4 @@ extension Color {
             opacity: opacity
         )
     }
-}
-
-#Preview {
-    LogInView()
 }

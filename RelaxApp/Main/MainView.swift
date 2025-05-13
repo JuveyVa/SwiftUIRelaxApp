@@ -31,6 +31,8 @@ struct MainView: View {
                 Label("Notification", systemImage: "bell")
             }
         }.accentColor(Color.button)
+        .navigationBarBackButtonHidden(true)
+        .interactiveDismissDisabled(true) 
     }
 }
 
